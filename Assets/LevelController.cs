@@ -35,6 +35,11 @@ public class LevelController : UnitySingleton<LevelController>
   int answersIndex = 0; //current index in trialAnswers
   int currentTrial = 0; //which set of trialAnswers we are on (ex: heartsOnly)
 
+  public GameObject flowerLeft;
+  public GameObject heartLeft;
+  public GameObject heartRight;
+  public GameObject flowerRight;
+
   void parseInput(direction answer) //function tells us what to do with the player's answers
   {
     trialAnswers[] answerArray = heartsOnly;
@@ -57,7 +62,19 @@ public class LevelController : UnitySingleton<LevelController>
     {
       Debug.Log("correct answer");
     }
+
+    // display the next trial in the series
+    // if we are at the end of a trail, do something special
+    DisplayTrial(      );
   }
+
+
+  void DisplayTrial(int trial, int index)
+  {
+
+  }
+
+
     // Start is called before the first frame update
     void Start()
     {
