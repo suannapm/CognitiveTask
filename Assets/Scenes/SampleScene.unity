@@ -299,8 +299,8 @@ MonoBehaviour:
   heartRight: {fileID: 1836409290}
   flowerRight: {fileID: 1113776246}
   crossHair: {fileID: 823940369}
-  waitTimeBetweenTrials: 0.1
-  crossHairWaitTime: 0.1
+  waitTimeBetweenTrials: 0.05
+  crossHairWaitTime: 0.05
 --- !u!4 &268935045
 Transform:
   m_ObjectHideFlags: 0
