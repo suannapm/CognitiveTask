@@ -157,16 +157,16 @@ MonoBehaviour:
     correctStimulus: 0
   - correctDirection: 1
     correctStimulus: 0
-  - correctDirection: 1
-    correctStimulus: 0
   - correctDirection: 0
+    correctStimulus: 0
+  - correctDirection: 1
     correctStimulus: 0
   flowersOnlyPractice:
-  - correctDirection: 1
-    correctStimulus: 1
   - correctDirection: 0
     correctStimulus: 1
   - correctDirection: 1
+    correctStimulus: 1
+  - correctDirection: 0
     correctStimulus: 1
   - correctDirection: 0
     correctStimulus: 1
@@ -174,10 +174,10 @@ MonoBehaviour:
   - correctDirection: 0
     correctStimulus: 0
   - correctDirection: 0
-    correctStimulus: 1
-  - correctDirection: 1
-    correctStimulus: 1
-  - correctDirection: 1
+    correctStimulus: 0
+  - correctDirection: 0
+    correctStimulus: 0
+  - correctDirection: 0
     correctStimulus: 0
   heartsOnly:
   - correctDirection: 0
@@ -294,13 +294,13 @@ MonoBehaviour:
     correctStimulus: 1
   - correctDirection: 0
     correctStimulus: 0
-  - correctDirection: 0
-    correctStimulus: 0
   flowerLeft: {fileID: 371835212}
   heartLeft: {fileID: 699264553}
   heartRight: {fileID: 1836409290}
   flowerRight: {fileID: 1113776246}
   crossHair: {fileID: 823940369}
+  waitTimeBetweenTrials: 0.05
+  crossHairWaitTime: 0.05
 --- !u!4 &268935045
 Transform:
   m_ObjectHideFlags: 0
