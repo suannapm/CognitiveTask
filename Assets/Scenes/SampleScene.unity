@@ -152,6 +152,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   leftKey: 276
   rightKey: 275
+  heartsOnlyPractice:
+  - correctDirection: 0
+    correctStimulus: 0
+  - correctDirection: 1
+    correctStimulus: 0
+  - correctDirection: 0
+    correctStimulus: 0
+  - correctDirection: 1
+    correctStimulus: 0
+  flowersOnlyPractice:
+  - correctDirection: 0
+    correctStimulus: 1
+  - correctDirection: 1
+    correctStimulus: 1
+  - correctDirection: 0
+    correctStimulus: 1
+  - correctDirection: 0
+    correctStimulus: 1
+  mixedPractice:
+  - correctDirection: 0
+    correctStimulus: 0
+  - correctDirection: 0
+    correctStimulus: 0
+  - correctDirection: 0
+    correctStimulus: 0
+  - correctDirection: 0
+    correctStimulus: 0
   heartsOnly:
   - correctDirection: 0
     correctStimulus: 0
@@ -272,6 +299,8 @@ MonoBehaviour:
   heartRight: {fileID: 1836409290}
   flowerRight: {fileID: 1113776246}
   crossHair: {fileID: 823940369}
+  waitTimeBetweenTrials: 0.1
+  crossHairWaitTime: 0.1
 --- !u!4 &268935045
 Transform:
   m_ObjectHideFlags: 0

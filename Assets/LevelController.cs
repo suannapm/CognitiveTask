@@ -44,26 +44,27 @@ public class LevelController : UnitySingleton<LevelController>
   public GameObject heartRight;
   public GameObject flowerRight;
   public GameObject crossHair;
+  public float waitTimeBetweenTrials;
+  public float crossHairWaitTime;
 
   //helper function that tells us if we are at the end of the trial or not
   bool endOfTrial(int trial, int index)
   {
     bool ans = false; //default value
 
-    // NOTE: don't hardcode the length of each trial. Instead, you can access
-    // the length of each array using the Length property. For example:
-    // if (index == flowersOnly.Length)
-    if(trial == 0 || trial == 2 || trial == 4)
+    if(trial == 0 || trial == 2 || trial == 4) // practice trials
+    // Assuming that all of the practice trials are the same length
     {
-      if(index == 3){ans = true;}
+      if(index == heartsOnlyPractice.Length - 1){ans = true;}
     }
-    if(trial == 1 || trial == 3)
+    // Assuming that heart and flower trials are the same length
+    if(trial == 1 || trial == 3) // hearts only, flowers only
     {
-      if(index == 11){ans = true;}
+      if(index == heartsOnly.Length - 1){ans = true;}
     }
     if(trial == 5)
     {
-      if(index == 32){ans = true;}
+      if(index == mixed.Length - 1){ans = true;}
     }
     return ans;
   }
@@ -107,6 +108,56 @@ public class LevelController : UnitySingleton<LevelController>
       Debug.Log("wrong answer");
     }
 
+    MoveOn();
+  }
+
+  IEnumerator DoTrial()
+  {
+    Debug.Log("Answers index: " + answersIndex);
+    Debug.Log("Current trial: " + currentTrial);
+    DisplayTrial(currentTrial, answersIndex);
+
+    // listen for user input
+    float timer = waitTimeBetweenTrials;
+    while (timer > 0)
+    {
+      if(Input.GetKeyDown(rightKey))
+        {
+          parseInput(direction.RIGHT);
+          Debug.Log("rightkey was pressed");
+          MoveOn();
+          yield break;
+        }
+        if(Input.GetKeyDown(leftKey))
+        {
+          parseInput(direction.LEFT);
+          MoveOn();
+          yield break;
+        }
+      timer -= Time.deltaTime;
+      yield return null;
+    }
+
+    // Move on if the user does not press anything
+    MoveOn();
+  yield return null;
+
+  }
+
+  IEnumerator WaitInBetweenTrials()
+  {
+    crossHair.SetActive(true);
+    heartRight.SetActive(false);
+    heartLeft.SetActive(false);
+    flowerRight.SetActive(false);
+    flowerLeft.SetActive(false);
+    yield return new WaitForSeconds(crossHairWaitTime);
+    StartCoroutine("DoTrial");
+  }
+
+  // Moves on to the next trial
+  void MoveOn()
+  {
     // display the next trial in the series
     // if we are at the end of a trail, do something special
     if(endOfTrial(currentTrial, answersIndex))
@@ -114,6 +165,8 @@ public class LevelController : UnitySingleton<LevelController>
       if(currentTrial == 5) //
       {
         //end of game
+        Debug.Log("End of game :)");
+        return;
       }
       else
       {
@@ -122,13 +175,8 @@ public class LevelController : UnitySingleton<LevelController>
       }
     }
     answersIndex = answersIndex + 1;
-    coroutineVars temp;
-    temp.trial = currentTrial;
-    temp.index = answersIndex;
-    StartCoroutine("trialTiming", temp);
-    //DisplayTrial(currentTrial, answersIndex);
+    StartCoroutine("WaitInBetweenTrials");
   }
-
 
   void DisplayTrial(int trial, int index)
   {
@@ -170,6 +218,7 @@ public class LevelController : UnitySingleton<LevelController>
 
     if(trial == 4 || trial == 5) //mixed
     {
+      Debug.Log(index);
       if(mixed[index].correctStimulus == stimulus.HEARTS)
       {
         if(mixed[index].correctDirection == direction.RIGHT)
@@ -207,63 +256,9 @@ public class LevelController : UnitySingleton<LevelController>
     }
   }
 
-  public struct coroutineVars
-  {
-    public int trial;
-    public int index;
-  }
-
-  void MoveOn()
-  {
-    // display the next trial in the series
-    // if we are at the end of a trail, do something special
-    if(endOfTrial(currentTrial, answersIndex))
-    {
-      if(currentTrial == 5) //
-      {
-        //end of game
-      }
-      else
-      {
-        currentTrial = currentTrial + 1; //updates to next trial 
-        answersIndex = -1; //so when we add 1 it goes to zero
-      }
-    }
-  }
-  //coroutine used for timing in trials
-  IEnumerator trialTiming(coroutineVars vars)
-  {
-    crossHair.SetActive(true);
-    heartRight.SetActive(false);
-    heartLeft.SetActive(false);
-    flowerRight.SetActive(false);
-    flowerLeft.SetActive(false);
-  
-    yield return new WaitForSeconds(.5f);
-    DisplayTrial(vars.trial, vars.index);
-    yield return new WaitForSeconds(1.5f);
-    MoveOn();
-    yield return null;
-    
-
-  }
     // Start is called before the first frame update
     void Start()
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        if(Input.GetKeyDown(rightKey))
-        {
-          parseInput(direction.RIGHT);
-          Debug.Log("rightkey was pressed");
-        }
-        if(Input.GetKeyDown(leftKey))
-        {
-          parseInput(direction.LEFT);
-        }
+        StartCoroutine("DoTrial");
     }
 }
