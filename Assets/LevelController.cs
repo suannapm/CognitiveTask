@@ -126,7 +126,6 @@ public class LevelController : UnitySingleton<LevelController>
     temp.trial = currentTrial;
     temp.index = answersIndex;
     StartCoroutine("trialTiming", temp);
-    //DisplayTrial(currentTrial, answersIndex);
   }
 
 
@@ -213,6 +212,7 @@ public class LevelController : UnitySingleton<LevelController>
     public int index;
   }
 
+  //helper function for if there is no input (right or left arrow keys)
   void MoveOn()
   {
     // display the next trial in the series
@@ -229,7 +229,13 @@ public class LevelController : UnitySingleton<LevelController>
         answersIndex = -1; //so when we add 1 it goes to zero
       }
     }
+    answersIndex = answersIndex + 1;
+    coroutineVars temp;
+    temp.trial = currentTrial;
+    temp.index = answersIndex;
+    StartCoroutine("trialTiming", temp);
   }
+
   //coroutine used for timing in trials
   IEnumerator trialTiming(coroutineVars vars)
   {
@@ -239,9 +245,9 @@ public class LevelController : UnitySingleton<LevelController>
     flowerRight.SetActive(false);
     flowerLeft.SetActive(false);
   
-    yield return new WaitForSeconds(.5f);
+    yield return new WaitForSeconds(.5f); //in seconds
     DisplayTrial(vars.trial, vars.index);
-    yield return new WaitForSeconds(1.5f);
+    yield return new WaitForSeconds(1.5f); //in seconds
     MoveOn();
     yield return null;
     
