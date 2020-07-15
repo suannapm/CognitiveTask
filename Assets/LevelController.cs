@@ -49,6 +49,10 @@ public class LevelController : UnitySingleton<LevelController>
   bool endOfTrial(int trial, int index)
   {
     bool ans = false; //default value
+
+    // NOTE: don't hardcode the length of each trial. Instead, you can access
+    // the length of each array using the Length property. For example:
+    // if (index == flowersOnly.Length)
     if(trial == 0 || trial == 2 || trial == 4)
     {
       if(index == 3){ans = true;}
@@ -208,6 +212,24 @@ public class LevelController : UnitySingleton<LevelController>
     public int trial;
     public int index;
   }
+
+  void MoveOn()
+  {
+    // display the next trial in the series
+    // if we are at the end of a trail, do something special
+    if(endOfTrial(currentTrial, answersIndex))
+    {
+      if(currentTrial == 5) //
+      {
+        //end of game
+      }
+      else
+      {
+        currentTrial = currentTrial + 1; //updates to next trial 
+        answersIndex = -1; //so when we add 1 it goes to zero
+      }
+    }
+  }
   //coroutine used for timing in trials
   IEnumerator trialTiming(coroutineVars vars)
   {
@@ -216,10 +238,11 @@ public class LevelController : UnitySingleton<LevelController>
     heartLeft.SetActive(false);
     flowerRight.SetActive(false);
     flowerLeft.SetActive(false);
+  
     yield return new WaitForSeconds(.5f);
-    crossHair.SetActive(false);
     DisplayTrial(vars.trial, vars.index);
     yield return new WaitForSeconds(1.5f);
+    MoveOn();
     yield return null;
     
 
