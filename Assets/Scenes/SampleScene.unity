@@ -155,54 +155,123 @@ MonoBehaviour:
   heartsOnly:
   - correctDirection: 0
     correctStimulus: 0
-  - correctDirection: 0
+  - correctDirection: 1
     correctStimulus: 0
   - correctDirection: 0
     correctStimulus: 0
-  - correctDirection: 0
+  - correctDirection: 1
     correctStimulus: 0
   - correctDirection: 0
     correctStimulus: 0
-  - correctDirection: 0
+  - correctDirection: 1
     correctStimulus: 0
   - correctDirection: 0
     correctStimulus: 0
-  - correctDirection: 0
+  - correctDirection: 1
+    correctStimulus: 0
+  - correctDirection: 1
     correctStimulus: 0
   - correctDirection: 0
     correctStimulus: 0
-  - correctDirection: 0
-    correctStimulus: 0
-  - correctDirection: 0
+  - correctDirection: 1
     correctStimulus: 0
   - correctDirection: 0
     correctStimulus: 0
   flowersOnly:
   - correctDirection: 0
     correctStimulus: 1
-  - correctDirection: 0
+  - correctDirection: 1
     correctStimulus: 1
   - correctDirection: 0
     correctStimulus: 1
-  - correctDirection: 0
+  - correctDirection: 1
     correctStimulus: 1
   - correctDirection: 0
     correctStimulus: 1
-  - correctDirection: 0
+  - correctDirection: 1
     correctStimulus: 1
   - correctDirection: 0
     correctStimulus: 1
-  - correctDirection: 0
+  - correctDirection: 1
     correctStimulus: 1
   - correctDirection: 0
     correctStimulus: 1
-  - correctDirection: 0
+  - correctDirection: 1
     correctStimulus: 1
   - correctDirection: 0
     correctStimulus: 1
+  - correctDirection: 1
+    correctStimulus: 1
+  mixed:
+  - correctDirection: 0
+    correctStimulus: 0
+  - correctDirection: 1
+    correctStimulus: 0
   - correctDirection: 0
     correctStimulus: 1
-  mixed: []
+  - correctDirection: 1
+    correctStimulus: 1
+  - correctDirection: 0
+    correctStimulus: 0
+  - correctDirection: 1
+    correctStimulus: 0
+  - correctDirection: 0
+    correctStimulus: 1
+  - correctDirection: 1
+    correctStimulus: 1
+  - correctDirection: 0
+    correctStimulus: 0
+  - correctDirection: 1
+    correctStimulus: 0
+  - correctDirection: 0
+    correctStimulus: 1
+  - correctDirection: 1
+    correctStimulus: 1
+  - correctDirection: 0
+    correctStimulus: 0
+  - correctDirection: 1
+    correctStimulus: 0
+  - correctDirection: 0
+    correctStimulus: 1
+  - correctDirection: 1
+    correctStimulus: 1
+  - correctDirection: 0
+    correctStimulus: 0
+  - correctDirection: 1
+    correctStimulus: 0
+  - correctDirection: 0
+    correctStimulus: 1
+  - correctDirection: 1
+    correctStimulus: 1
+  - correctDirection: 0
+    correctStimulus: 0
+  - correctDirection: 1
+    correctStimulus: 0
+  - correctDirection: 0
+    correctStimulus: 1
+  - correctDirection: 1
+    correctStimulus: 1
+  - correctDirection: 1
+    correctStimulus: 0
+  - correctDirection: 0
+    correctStimulus: 1
+  - correctDirection: 1
+    correctStimulus: 1
+  - correctDirection: 0
+    correctStimulus: 0
+  - correctDirection: 1
+    correctStimulus: 0
+  - correctDirection: 0
+    correctStimulus: 1
+  - correctDirection: 1
+    correctStimulus: 1
+  - correctDirection: 0
+    correctStimulus: 0
+  flowerLeft: {fileID: 371835212}
+  heartLeft: {fileID: 699264553}
+  heartRight: {fileID: 1836409290}
+  flowerRight: {fileID: 1113776246}
+  crossHair: {fileID: 823940369}
 --- !u!4 &268935045
 Transform:
   m_ObjectHideFlags: 0
@@ -217,6 +286,12 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &371835212 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2535323007714742602, guid: 0a28fe6689468f942b746065f67d8821,
+    type: 3}
+  m_PrefabInstance: {fileID: 3545536721808652542}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &506575016
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,6 +441,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &699264553 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3264084497166292453, guid: 0a28fe6689468f942b746065f67d8821,
+    type: 3}
+  m_PrefabInstance: {fileID: 3545536721808652542}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &823940369 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3980875188211417541, guid: 0a28fe6689468f942b746065f67d8821,
+    type: 3}
+  m_PrefabInstance: {fileID: 3545536721808652542}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1113776246 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1599612883388518183, guid: 0a28fe6689468f942b746065f67d8821,
+    type: 3}
+  m_PrefabInstance: {fileID: 3545536721808652542}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1434369320
 GameObject:
   m_ObjectHideFlags: 0
@@ -546,6 +639,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1739312941}
   m_CullTransparentMesh: 0
+--- !u!1 &1836409290 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6013149040470673313, guid: 0a28fe6689468f942b746065f67d8821,
+    type: 3}
+  m_PrefabInstance: {fileID: 3545536721808652542}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3545536721808652542
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -658,10 +757,30 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3276135668881244090, guid: 0a28fe6689468f942b746065f67d8821,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 0.5660378
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276135668881244090, guid: 0a28fe6689468f942b746065f67d8821,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 0.5660378
+      objectReference: {fileID: 0}
+    - target: {fileID: 3276135668881244090, guid: 0a28fe6689468f942b746065f67d8821,
+        type: 3}
+      propertyPath: m_Color.b
+      value: 0.5660378
+      objectReference: {fileID: 0}
     - target: {fileID: 4658871962165008646, guid: 0a28fe6689468f942b746065f67d8821,
         type: 3}
       propertyPath: m_Name
       value: HeartsOnly
+      objectReference: {fileID: 0}
+    - target: {fileID: 5359215751402545180, guid: 0a28fe6689468f942b746065f67d8821,
+        type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0a28fe6689468f942b746065f67d8821, type: 3}
