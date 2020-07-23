@@ -20,7 +20,7 @@ public class LevelController : UnitySingleton<LevelController>
     FLOWERS
   };
 
-
+ 
   [System.Serializable]
   public class trialAnswers //the correct answers to the questions asked 
   {
@@ -46,6 +46,47 @@ public class LevelController : UnitySingleton<LevelController>
   public GameObject crossHair;
   public float waitTimeBetweenTrials;
   public float crossHairWaitTime;
+
+  [System.Serializable]
+  public class HeartsAndFlowersData //the data we want to save 
+  {
+    public float H_RT = 0.0F; //mean reaction time response for heartsOnly block
+    public float F_RT = 0.0F;
+    public float M_RT = 0.0F;
+    public float H_ACC = 0.0F; //accuracy for heartsOnly block
+    public float F_ACC = 0.0F;
+    public float M_ACC= 0.0F;
+    public float H_TotalCorrect = 0.0F;
+    public float F_TotalCorrect = 0.0F;
+    public float M_TotalCorrect = 0.0F;
+    public float M_H_TotalCorrect = 0.0F; //how many heart test trials were correct in mixed block
+    public float M_F_TotalCorrect = 0.0F; //how many flower test trials were correct in mixed block
+    public int H_TotalErrors = 0;
+    public int F_TotalErrors = 0;
+    public int M_TotalErrors = 0;
+    public float M_H_ACC = 0.0F; //accuracy in the mixed block for the heart trials
+    public float M_F_ACC = 0.0F; //accuracy in the mixed block for the flower trials
+    public float M_H_TrialsTotal = 0.0F; //number of heart trials in mixed block
+    public float M_F_TrialsTotal = 0.0F; //number of flower trials in mixed block
+  }
+
+  public HeartsAndFlowersData dataToSave; //variable that we will manipulate to save
+
+  float correctAnswersHearts = 0.0F; //to keep track on if the answers were correct or not for only the actual trials
+  float correctAnswersFlowers = 0.0F;
+  float correctAnswersMixed = 0.0F;
+  float RTHearts = 0.0F; //add all the RTs together to divide at the end of the game
+  float RTFlowers = 0.0F;
+  float RTMixed = 0.0F;
+  int heartsMissed = 0; //counter for errors
+  int flowersMissed = 0;
+  int mixedMissed = 0;
+  float correctAnswersMixed_H = 0.0F; //to keep track of the heart trials in mixed block
+  float correctAnswersMixed_F = 0.0F; //to keep track of the flower trials in mixed block
+  int mixedMissed_H = 0; //track of incorrect heart trials in mixed block
+  int mixedMissed_F = 0; //track of incorrect flower trials in mixed block
+  float mixed_H_TrialsTotal = 0.0F;
+  float mixed_F_TrialsTotal = 0.0F;
 
   //helper function that tells us if we are at the end of the trial or not
   bool endOfTrial(int trial, int index)
@@ -102,12 +143,52 @@ public class LevelController : UnitySingleton<LevelController>
     if(answer == answerArray[answersIndex].correctDirection) //if we have the correct answer
     {
       Debug.Log("correct answer");
+      //update correct answers trackers
+      if(practiceMode == false && answerArray == heartsOnly) //in test heart trials
+      {
+        correctAnswersHearts = correctAnswersHearts + 1;
+      }
+      if(practiceMode == false && answerArray == flowersOnly)
+      {
+        correctAnswersFlowers = correctAnswersFlowers + 1;
+      }
+      if(practiceMode == false && answerArray == mixed)
+      {
+        correctAnswersMixed = correctAnswersMixed + 1;
+        if(answerArray[answersIndex].correctStimulus == stimulus.HEARTS)
+        {
+          correctAnswersMixed_H = correctAnswersMixed_H + 1;
+          mixed_H_TrialsTotal = mixed_H_TrialsTotal + 1;
+        }
+        else
+        {
+          correctAnswersMixed_F = correctAnswersMixed_F + 1;
+          mixed_F_TrialsTotal = mixed_F_TrialsTotal + 1;
+        } //correctStimulus == FLOWERS
+      }
     }
     else //incorrect
     {
       Debug.Log("wrong answer");
+      if(practiceMode == false && answerArray == heartsOnly){heartsMissed = heartsMissed + 1;}
+      if(practiceMode == false && answerArray == flowersOnly){flowersMissed = flowersMissed + 1;}
+      if(practiceMode == false && answerArray == mixed)
+      {
+        //still update how many heart and flower trials are in the mixed block
+        if(answerArray[answersIndex].correctStimulus == stimulus.HEARTS)
+        {
+          mixed_H_TrialsTotal = mixed_H_TrialsTotal + 1;
+          mixedMissed_H = mixedMissed_H + 1;
+        }
+        else //correctStimulus == FLOWERS
+        {
+          mixed_F_TrialsTotal = mixed_F_TrialsTotal + 1;
+          mixedMissed_F = mixedMissed_F + 1;
+        }
+        mixedMissed = mixedMissed + 1;
+      }
+      //if in practice mode we want to give feedback
     }
-
     MoveOn();
   }
 
@@ -123,25 +204,60 @@ public class LevelController : UnitySingleton<LevelController>
     {
       if(Input.GetKeyDown(rightKey))
         {
-          parseInput(direction.RIGHT);
           Debug.Log("rightkey was pressed");
-          MoveOn();
+          if(currentTrial == 1) //test heart trials
+          {
+            RTHearts = RTHearts + (waitTimeBetweenTrials - timer);
+            //keep track of all the RTs
+          }
+          if(currentTrial == 3) //test flower trials
+          {
+            RTFlowers = RTFlowers + (waitTimeBetweenTrials - timer);
+          }
+          if(currentTrial == 5) //test mixed trials
+          {
+            RTMixed = RTMixed + (waitTimeBetweenTrials - timer);
+          }
+          parseInput(direction.RIGHT);
           yield break;
         }
         if(Input.GetKeyDown(leftKey))
         {
+          Debug.Log("leftkey was pressed");
+          if(currentTrial == 1) //test heart trials
+          {
+            RTHearts = RTHearts + (waitTimeBetweenTrials - timer);
+            //keep track of all the RTs
+          }
+          if(currentTrial == 3) //test flower trials
+          {
+            RTFlowers = RTFlowers + (waitTimeBetweenTrials - timer);
+          }
+          if(currentTrial == 5) //test mixed trials
+          {
+            RTMixed = RTMixed + (waitTimeBetweenTrials - timer);
+          }
           parseInput(direction.LEFT);
-          MoveOn();
           yield break;
         }
       timer -= Time.deltaTime;
       yield return null;
     }
-
+    //keep track of how many were missed
+    if(timer <= 0 && practiceMode == false)
+    {
+      if(currentTrial == 1){heartsMissed = heartsMissed + 1;}
+      if(currentTrial == 3){flowersMissed = flowersMissed + 1;}
+      if(currentTrial == 5)
+      {
+        mixedMissed = mixedMissed + 1;
+        if(mixed[answersIndex].correctStimulus == stimulus.HEARTS){mixedMissed_H = mixedMissed_H + 1;}
+        else{mixedMissed_F = mixedMissed_F + 1;} //correctStimulus == FLOWERS
+      }
+    }
     // Move on if the user does not press anything
     MoveOn();
-  yield return null;
-
+    yield return null;
   }
 
   IEnumerator WaitInBetweenTrials()
@@ -152,6 +268,9 @@ public class LevelController : UnitySingleton<LevelController>
     flowerRight.SetActive(false);
     flowerLeft.SetActive(false);
     yield return new WaitForSeconds(crossHairWaitTime);
+    crossHair.SetActive(false);
+    yield return new WaitForSeconds(crossHairWaitTime); 
+    //assuming you want the same time for a blank screen as the crosshair
     StartCoroutine("DoTrial");
   }
 
@@ -159,12 +278,40 @@ public class LevelController : UnitySingleton<LevelController>
   void MoveOn()
   {
     // display the next trial in the series
-    // if we are at the end of a trail, do something special
+    // if we are at the end of a trial, do something special
     if(endOfTrial(currentTrial, answersIndex))
     {
       if(currentTrial == 5) //
       {
         //end of game
+        //calculate correct accuracy
+        dataToSave.H_ACC = correctAnswersHearts/heartsOnly.Length;
+        dataToSave.F_ACC = correctAnswersFlowers/flowersOnly.Length;
+        dataToSave.M_ACC = correctAnswersMixed/mixed.Length;
+        dataToSave.M_H_ACC = correctAnswersMixed_H/mixed_H_TrialsTotal;
+        dataToSave.M_F_ACC = correctAnswersMixed_F/mixed_F_TrialsTotal;
+
+        //update TrialsTotal for mixed block
+        dataToSave.M_H_TrialsTotal = mixed_H_TrialsTotal;
+        dataToSave.M_F_TrialsTotal = mixed_F_TrialsTotal;
+
+        //caluclate mean RTs
+        dataToSave.H_RT = RTHearts / (heartsOnly.Length - heartsMissed);
+        dataToSave.F_RT = RTFlowers / (flowersOnly.Length - flowersMissed);
+        dataToSave.M_RT = RTMixed / (mixed.Length - mixedMissed);
+
+        //how many were correct in each block
+        dataToSave.H_TotalCorrect = correctAnswersHearts;
+        dataToSave.F_TotalCorrect = correctAnswersFlowers;
+        dataToSave.M_TotalCorrect = correctAnswersMixed;
+        dataToSave.M_H_TotalCorrect = correctAnswersMixed_H;
+        dataToSave.M_F_TotalCorrect = correctAnswersMixed_F;
+
+        //Errors in each block
+        dataToSave.H_TotalErrors = heartsMissed;
+        dataToSave.F_TotalErrors = flowersMissed;
+        dataToSave.M_TotalErrors = mixedMissed;
+
         Debug.Log("End of game :)");
         return;
       }
